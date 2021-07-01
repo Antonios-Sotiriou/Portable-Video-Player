@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Video Player</title>
+        <link rel="stylesheet" href="video_player.css">
+    </head>
+    <body id="videoContainer">
+        <div>
+            <video id="video" preload="metadata" poster="#">
+                <source src="test_video.mp4" type="video/mp4">
+                <source src="test_video.webm" type="video/webm">
+                <source src="test_video.ogg" type="video/ogg">
+                <!-- Flash fallback -->
+                <object type="application/x-shockwave-flash" data="flash-player.swf?videoUrl=test_video.mp4" width="1024" height="576">
+                    <param name="movie" value="flash-player.swf?videoUrl=test_video.mp4" />
+                    <param name="allowfullscreen" value="true" />
+                    <param name="wmode" value="transparent" />
+                    <param name="flashvars" value="controlbar=over&amp;image=img/poster.jpg&amp;file=flash-player.swf?videoUrl=test_video.mp4" />
+                    <img alt="Tears of Steel poster image" src="#" width="1024" height="428" title="No video playback possible, please download the video from the link below" />
+                </object>
+                <!-- Offer download -->
+		<!-- This link isn't showing up  -->
+                <a href="test_video.mp4">Download MP4</a>
+            </video>
+        </div>
+        <div>
+            <ul id="video-controlers" class="controlers">
+                <li class="playpause">
+                    <button id="playpause" type="button">Play/Pause</button>
+                </li>
+                <li class="stop">
+                    <button id="stop" type="button">Stop</button>
+                </li>
+                <li class="progress">
+                    <progress id="progress" value="0" min="0">
+                        <span id="progress-bar"></span>
+                    </progress>
+                </li>
+                <li class="mute">
+                    <button id="mute" type="button">Mute/Unmute</button>
+                </li>
+                <li class="volinc">
+                    <button id="volinc" type="button">Vol+</button>
+                </li>
+                <li class="voldec">
+                    <button id="voldec" type="button">Vol-</button>
+                </li>
+                <li class="fullscreen">
+                    <button id="fs" type="button">Fullscreen</button>
+                </li>
+                </ul>
+        </div>
+
+        <script src="video_player.js"></script>
+    </body>
+</html>
