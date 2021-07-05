@@ -5,16 +5,22 @@ video::-webkit-media-controls {
 .controlers { 
     z-index:2147483647;
 }
+body {
+    display: flex;
+    height: 98vh;
+    background-color: #120a1a;
+
+}
 /* Normal video player css */
 #videoContainer {
     position: relative;
-    background-color: #333;
-    height: 100vh;
-    margin: 0;
+    display: flex;
+    width: 650px;
+    margin: auto auto auto auto;
 }
 #video {
     width: 100%;
-    height: 100vh;
+    margin: auto auto auto auto;
 }
 #video-controlers {
     position: absolute;
@@ -23,11 +29,68 @@ video::-webkit-media-controls {
     width: 100%;
     margin: 0;
     padding: 0;
-    transition: ease-in-out 1s;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+.playpause {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#playpause {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto;
+}
+.stop {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#stop {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto;
 }
 .progress {
     flex: 1;
+    height: 50px;
+    display: flex;
 }#progress {
     width: 100%;
     cursor: pointer;
+}
+.mute {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#mute {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto; 
+}
+.volinc {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#volinc {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto; 
+}
+.voldec {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#voldec {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto; 
+}
+.fullscreen {
+    display: flex;
+    width: 50px;
+    height: 50px;
+}#fs {
+    width: 30px;
+    height: 30px;
+    margin: auto auto auto auto; 
 }

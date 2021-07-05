@@ -7,8 +7,10 @@
         <title>Video Player</title>
         <link rel="stylesheet" href="video_player.css">
     </head>
-    <body id="videoContainer">
-        <div>
+
+    <body>
+
+        <div id="videoContainer">
             <video id="video" preload="metadata" poster="#">
                 <source src="test_video.mp4" type="video/mp4">
                 <source src="test_video.webm" type="video/webm">
@@ -22,36 +24,36 @@
                     <img alt="Tears of Steel poster image" src="#" width="1024" height="428" title="No video playback possible, please download the video from the link below" />
                 </object>
                 <!-- Offer download -->
-		<!-- This link isn't showing up  -->
+		        <!-- This link isn't showing up  -->
                 <a href="test_video.mp4">Download MP4</a>
             </video>
-        </div>
-        <div>
+
             <ul id="video-controlers" class="controlers">
                 <li class="playpause">
-                    <button id="playpause" type="button">Play/Pause</button>
+                    <input type="image" id="playpause" src="images/play.png" width="50" height="50">
                 </li>
                 <li class="stop">
-                    <button id="stop" type="button">Stop</button>
+                    <input type="image" id="stop" src="images/stop.png" width="30" height="30">
                 </li>
                 <li class="progress">
-                    <progress id="progress" value="0" min="0">
-                        <span id="progress-bar"></span>
-                    </progress>
+                    <!-- <progress id="progress" value="0" min="0"> -->
+                        <input type="range" id="progress" value="0" min="0" step="any">
+                        <!-- <span id="progress-bar"></span> -->
+                    <!-- </progress> -->
                 </li>
                 <li class="mute">
-                    <button id="mute" type="button">Mute/Unmute</button>
+                    <input type="image" id="mute" src="images/unmute.png" width="30" height="30">
                 </li>
                 <li class="volinc">
-                    <button id="volinc" type="button">Vol+</button>
+                    <input type="image" id="volinc" src="images/volume-up.png" width="30" height="30">
                 </li>
                 <li class="voldec">
-                    <button id="voldec" type="button">Vol-</button>
+                    <input type="image" id="voldec" src="images/volume-down.png" width="30" height="30">
                 </li>
                 <li class="fullscreen">
-                    <button id="fs" type="button">Fullscreen</button>
+                    <input type="image" id="fs" src="images/fullscreen-enter.png" width="30" height="30">
                 </li>
-                </ul>
+            </ul>
         </div>
 
         <script src="video_player.js"></script>

@@ -21,27 +21,40 @@ if (supportsVideo) {
     var fullscreen = document.getElementById('fs');
 
     videoContainer.addEventListener('pointerleave', () => {
-        videoControlers.style.display = 'none';
+        // videoControlers.style.display = 'none';
+        videoControlers.style.height = '0px';
     })
 
     videoContainer.addEventListener('pointerenter', () => {
-        videoControlers.style.display = 'flex'
+        // videoControlers.style.display = 'flex'
+        videoControlers.style.height = '50px';
     })
 
     // Play/Pause
     playpause.addEventListener('click', (e) => {
-        if (video.paused || video.ended) video.play();
-        else video.pause();
+        if (video.paused || video.ended) {
+            video.play();
+            playpause.src = 'images/pause.png';
+        } else {
+            video.pause();
+            playpause.src = 'images/play.png'
+        }
     });
 
     stop.addEventListener('click', (e) => {
         video.pause();
         video.currentTime = 0;
         progress.value = 0;
+        playpause.src = 'images/play.png'
     });
 
     mute.addEventListener('click', (e) => {
         video.muted = !video.muted;
+        if (video.muted) {
+            mute.src = 'images/mute.png'
+        } else {
+            mute.src = 'images/unmute.png'
+        }
     });
 
     volinc.addEventListener('click', (e) => {
@@ -69,7 +82,8 @@ if (supportsVideo) {
     video.addEventListener('timeupdate', () => {
         if (!progress.getAttribute('max')) progress.setAttribute('max', video.duration);
         progress.value = video.currentTime;
-        progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
+        // progress.step = Math.floor((video.currentTime / video.duration) * 100) + '%';
+        // progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
     });
 
     progress.addEventListener('click', function (e) {
@@ -95,6 +109,7 @@ if (supportsVideo) {
            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
            else if (document.msExitFullscreen) document.msExitFullscreen();
            setFullscreenData(false);
+           fullscreen.src = 'images/fullscreen-enter.png'
         }
         else {
            if (videoContainer.requestFullscreen) videoContainer.requestFullscreen();
@@ -102,6 +117,7 @@ if (supportsVideo) {
            else if (videoContainer.webkitRequestFullScreen) videoContainer.webkitRequestFullScreen();
            else if (videoContainer.msRequestFullscreen) videoContainer.msRequestFullscreen();
            setFullscreenData(true);
+           fullscreen.src = 'images/fullscreen-exit.png'
         }
     }
 
