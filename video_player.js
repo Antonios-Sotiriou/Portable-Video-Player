@@ -20,19 +20,34 @@ if (supportsVideo) {
     var progressBar = document.getElementById('progress-bar');
     var fullscreen = document.getElementById('fs');
 
+    const hideControlers = () => videoControlers.style.height = '0px';
+    let active = setTimeout(hideControlers, 10000);
+
     videoContainer.addEventListener('pointerleave', () => {
-        // videoControlers.style.display = 'none';
         videoControlers.style.height = '0px';
     })
 
     videoContainer.addEventListener('pointerenter', () => {
-        // videoControlers.style.display = 'flex'
+        videoControlers.style.height = '50px';
+        clearTimeout(active)
+        active = setTimeout(hideControlers, 2000);
+    })
+
+    videoContainer.addEventListener('pointermove', () => {
+        videoControlers.style.height = '50px';
+        clearTimeout(active)
+        active = setTimeout(hideControlers, 2000);
+    })
+    // ######################### Must be fixed!Doesn't work correctly with the touch event
+    videoContainer.addEventListener('touchstart', () => {
+        videoContainer.removeEventListener('pointerleave', () => undefined);
+        videoContainer.removeEventListener('pointerenter', () => undefined);
         videoControlers.style.height = '50px';
     })
 
     // Play/Pause
     playpause.addEventListener('click', (e) => {
-        if (video.paused || video.ended) {
+        if (video.paused) {
             video.play();
             playpause.src = 'images/pause.png';
         } else {
@@ -82,6 +97,9 @@ if (supportsVideo) {
     video.addEventListener('timeupdate', () => {
         if (!progress.getAttribute('max')) progress.setAttribute('max', video.duration);
         progress.value = video.currentTime;
+        if (video.ended) {
+            playpause.src = 'images/play.png'
+        }
         // progress.step = Math.floor((video.currentTime / video.duration) * 100) + '%';
         // progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
     });
