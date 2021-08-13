@@ -5,28 +5,26 @@ video::-webkit-media-controls {
 .controlers { 
     z-index:2147483647;
 }
-body {
-    display: flex;
-    height: 98vh;
-    background-color: #120a1a;
-
-}
 /* Normal video player css */
-#videoContainer {
-    position: relative;
+.videoContainer {
     display: flex;
-    width: 650px;
-    margin: auto auto auto auto;
+    position: relative;
+    height: 98vh;
+    background-color: #000;
+    color: #fff;
 }
-#video {
+.video {
     width: 100%;
+    height: 100%;
     margin: auto auto auto auto;
 }
-#video-controlers {
+.video-controlers {
+    display: flex;
     position: absolute;
     bottom: 0;
     list-style: none;
     width: 100%;
+    height: 0px;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -34,63 +32,74 @@ body {
 }
 .playpause {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#playpause {
     width: 30px;
     height: 30px;
+}.playpause-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto;
 }
 .stop {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#stop {
     width: 30px;
     height: 30px;
+}.stop-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto;
 }
 .progress {
     flex: 1;
-    height: 50px;
+    height: 30px;
     display: flex;
-}#progress {
+}.progress-image {
     width: 100%;
     cursor: pointer;
+}.progress-time {
+    margin: auto auto auto auto;
+    font-size: 12px;
 }
 .mute {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#mute {
     width: 30px;
     height: 30px;
+}.mute-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto; 
 }
 .volinc {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#volinc {
     width: 30px;
     height: 30px;
+}.volinc-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto; 
 }
 .voldec {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#voldec {
     width: 30px;
     height: 30px;
+}.voldec-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto; 
 }
 .fullscreen {
     display: flex;
-    width: 50px;
-    height: 50px;
-}#fs {
     width: 30px;
     height: 30px;
+}.fs-image {
+    width: 20px;
+    height: 20px;
     margin: auto auto auto auto; 
+}
+@media only screen and (max-width: 1200px) {
+    .volinc {
+        display: none;
+    }
+    .voldec {
+        display: none;
+    }
 }

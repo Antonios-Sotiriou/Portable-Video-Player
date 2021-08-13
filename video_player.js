@@ -18,35 +18,101 @@ if (supportsVideo) {
     var voldec = document.getElementById('voldec');
     var progress = document.getElementById('progress');
     var progressBar = document.getElementById('progress-bar');
+    var progressMaxTime = document.getElementById('progress-maxtime');
+    var progressCurrentTime = document.getElementById('progress-currenttime');
     var fullscreen = document.getElementById('fs');
 
-    const hideControlers = () => videoControlers.style.height = '0px';
-    let active = setTimeout(hideControlers, 10000);
+    let shown = false;
+    const hideControlers = () => {
+        videoControlers.style.height = '0px'
+        shown = false
+    }
+    const showControlers = () => {
+        videoControlers.style.height = '30px'
+        shown = true
+    }
+    let active = setTimeout(hideControlers, 0);
 
-    videoContainer.addEventListener('pointerleave', () => {
-        videoControlers.style.height = '0px';
-    })
+    const hhmmss = (duration) => {
+        let hours = Math.floor(duration / 3600);
+        let mins = Math.floor((duration - (hours * 3600)) / 60);
+        let secs = duration - (hours * 3600) - (mins * 60);
 
-    videoContainer.addEventListener('pointerenter', () => {
-        videoControlers.style.height = '50px';
-        clearTimeout(active)
-        active = setTimeout(hideControlers, 2000);
-    })
+        if (hours < 10 && hours >= 1) {
+            hours = '0' + hours + ':';
+        } else if (hours < 1 || hours === 0) {
+            hours = '';
+        } else {
+            hours = hours + ':';
+        }
+        if (mins < 10) {mins = "0" + mins;}
+        if (secs < 10) {secs = "0" + secs;}
 
-    videoContainer.addEventListener('pointermove', () => {
-        videoControlers.style.height = '50px';
-        clearTimeout(active)
-        active = setTimeout(hideControlers, 2000);
-    })
-    // ######################### Must be fixed!Doesn't work correctly with the touch event
-    videoContainer.addEventListener('touchstart', () => {
-        videoContainer.removeEventListener('pointerleave', () => undefined);
-        videoContainer.removeEventListener('pointerenter', () => undefined);
-        videoControlers.style.height = '50px';
-    })
+        return `${hours}${mins}:${secs}`
+    }
 
-    // Play/Pause
-    playpause.addEventListener('click', (e) => {
+    // If the device has not 'ontouchevent' activate pointermove to show controls when mouse moves.
+    if (!('ontouchstart' in window) || (navigator.maxTouchPoints === 0) || (navigator.msMaxTouchPoints === 0)) {
+        videoContainer.addEventListener('pointermove', (e) => {
+            if (e.target.parentNode.className === 'video-controlers' || e.target.parentNode.nodeName === 'LI') {
+                showControlers()
+                clearTimeout(active)
+                active = setTimeout(hideControlers, 10000);
+            } else {
+                showControlers()
+                clearTimeout(active)
+                active = setTimeout(hideControlers, 2000);
+            }
+        })
+    }
+
+    if (this.navigator.vendor === 'Google Inc.' && this.navigator.userAgent.indexOf('Chrome/') !== -1) {
+        videoContainer.addEventListener('click', (e) => {
+            if (e.target.nodeName === 'VIDEO') {
+                if (!shown) {
+                    showControlers()
+                    clearTimeout(active)
+                    active = setTimeout(hideControlers, 10000)
+                } else {
+                    clearTimeout(active)
+                    hideControlers()
+                }
+            } else if (e.target.offsetParent.className === 'video-controlers' || e.target.offsetParent.nodeName === 'LI') {
+                showControlers()
+                clearTimeout(active)
+                active = setTimeout(hideControlers, 10000)
+            }
+        })
+        progress.oninput = (e) => {
+            progress.setAttribute('value', Number(e.target.value))
+            video.currentTime = progress.getAttribute('value')
+        }
+    } else if (this.navigator.userAgent.indexOf('Firefox/')) {
+        videoContainer.addEventListener('click', (e) => {
+            if (e.target.nodeName === 'VIDEO') {
+                if (!shown) {
+                    showControlers()
+                    clearTimeout(active)
+                    active = setTimeout(hideControlers, 10000)
+                } else {
+                    clearTimeout(active)
+                    hideControlers()
+                }
+            } else if (e.target.offsetParent.className === 'video-controlers' || e.target.offsetParent.nodeName === 'LI') {
+                showControlers()
+                clearTimeout(active)
+                active = setTimeout(hideControlers, 10000)
+
+                if (e.target.id === progress.id) {
+                    var rect = e.target.getBoundingClientRect()
+                    var pos = (e.pageX  - rect.left) / e.target.offsetWidth
+                    video.currentTime = pos * video.duration
+                }
+            }
+        })
+    }
+
+    playpause.addEventListener('click', () => {
         if (video.paused) {
             video.play();
             playpause.src = 'images/pause.png';
@@ -56,14 +122,14 @@ if (supportsVideo) {
         }
     });
 
-    stop.addEventListener('click', (e) => {
+    stop.addEventListener('click', () => {
         video.pause();
         video.currentTime = 0;
         progress.value = 0;
         playpause.src = 'images/play.png'
     });
 
-    mute.addEventListener('click', (e) => {
+    mute.addEventListener('click', () => {
         video.muted = !video.muted;
         if (video.muted) {
             mute.src = 'images/mute.png'
@@ -72,11 +138,11 @@ if (supportsVideo) {
         }
     });
 
-    volinc.addEventListener('click', (e) => {
+    volinc.addEventListener('click', () => {
         alterVolume('+');
     });
 
-    voldec.addEventListener('click', (e) => {
+    voldec.addEventListener('click', () => {
         alterVolume('-');
     });
 
@@ -89,25 +155,20 @@ if (supportsVideo) {
             if (currentVolume > 0) video.volume -= 0.1;
         }
     }
-     
+
     video.addEventListener('loadedmetadata', () => {
         progress.setAttribute('max', video.duration);
+        progressMaxTime.innerText = hhmmss(Math.floor(video.duration));
     });
 
     video.addEventListener('timeupdate', () => {
         if (!progress.getAttribute('max')) progress.setAttribute('max', video.duration);
-        progress.value = video.currentTime;
+        progress.setAttribute('value', video.currentTime);
+        progress.value = video.currentTime
+        progressCurrentTime.innerText = hhmmss(Math.floor(video.currentTime));
         if (video.ended) {
             playpause.src = 'images/play.png'
         }
-        // progress.step = Math.floor((video.currentTime / video.duration) * 100) + '%';
-        // progressBar.style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
-    });
-
-    progress.addEventListener('click', function (e) {
-        var rect = this.getBoundingClientRect();
-        var pos = (e.pageX  - rect.left) / this.offsetWidth;
-        video.currentTime = pos * video.duration;
     });
 
     var fullScreenEnabled = !!(document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitSupportsFullscreen || document.webkitFullscreenEnabled || document.createElement('video').webkitRequestFullScreen);

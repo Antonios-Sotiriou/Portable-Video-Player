@@ -6,12 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Video Player</title>
         <link rel="stylesheet" href="video_player.css">
-    </head>
+    </head>  
 
     <body>
-
-        <div id="videoContainer">
-            <video id="video" preload="metadata" poster="#">
+        <div id="videoContainer" class="videoContainer">
+            <video id="video" class="video" preload="metadata" poster="#">
                 <source src="test_video.mp4" type="video/mp4">
                 <source src="test_video.webm" type="video/webm">
                 <source src="test_video.ogg" type="video/ogg">
@@ -28,34 +27,33 @@
                 <a href="test_video.mp4">Download MP4</a>
             </video>
 
-            <ul id="video-controlers" class="controlers">
+            <ul id="video-controlers" class="video-controlers">
                 <li class="playpause">
-                    <input type="image" id="playpause" src="images/play.png" width="50" height="50">
+                    <input type="image" id="playpause" class="playpause-image" src="images/play.png" width="20" height="20" alt="Play/Pause">
                 </li>
                 <li class="stop">
-                    <input type="image" id="stop" src="images/stop.png" width="30" height="30">
+                    <input type="image" id="stop" class="stop-image" src="images/stop.png" width="20" height="20" alt="Stop">
                 </li>
                 <li class="progress">
-                    <!-- <progress id="progress" value="0" min="0"> -->
-                        <input type="range" id="progress" value="0" min="0" step="any">
-                        <!-- <span id="progress-bar"></span> -->
-                    <!-- </progress> -->
+                        <small id="progress-currenttime" class="progress-time" for="progress">00:00</small>
+                        <input type="range" id="progress" class="progress-image" value="0" min="0" step="any">
+                        <label id="progress-maxtime" class="progress-time" for="progress">00:00</label>
                 </li>
                 <li class="mute">
-                    <input type="image" id="mute" src="images/unmute.png" width="30" height="30">
+                    <input type="image" id="mute" class="mute-image" src="images/unmute.png" width="20" height="20" alt="Mute">
                 </li>
                 <li class="volinc">
-                    <input type="image" id="volinc" src="images/volume-up.png" width="30" height="30">
+                    <input type="image" id="volinc" class="volinc-image" src="images/volume-up.png" width="20" height="20" alt="Inc">
                 </li>
                 <li class="voldec">
-                    <input type="image" id="voldec" src="images/volume-down.png" width="30" height="30">
+                    <input type="image" id="voldec" class="voldec-image" src="images/volume-down.png" width="20" height="20" alt="Dec">
                 </li>
                 <li class="fullscreen">
-                    <input type="image" id="fs" src="images/fullscreen-enter.png" width="30" height="30">
+                    <input type="image" id="fs" class="fs-image" src="images/fullscreen-enter.png" width="20" height="20" alt="Fullscreen">
                 </li>
             </ul>
         </div>
 
         <script src="video_player.js"></script>
-    </body>
+    </body>  
 </html>
